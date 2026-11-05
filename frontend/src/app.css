@@ -1,0 +1,162 @@
+/* Deliberate accents on top of Mantine — glass chrome, hero, motion. */
+
+:root {
+  --app-accent: var(--mantine-color-indigo-6);
+  --app-accent-2: var(--mantine-color-violet-6);
+}
+
+/* --- brand --------------------------------------------------------------- */
+
+.brand-mark {
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  color: white;
+  background: linear-gradient(135deg, var(--app-accent), var(--app-accent-2));
+  box-shadow: 0 2px 10px color-mix(in srgb, var(--app-accent) 45%, transparent);
+}
+
+/* --- glass header ---------------------------------------------------------- */
+
+.app-header {
+  backdrop-filter: blur(12px) saturate(1.4);
+  background: color-mix(in srgb, var(--mantine-color-body) 78%, transparent) !important;
+  border-bottom: 1px solid var(--mantine-color-default-border);
+}
+
+/* --- navigation ------------------------------------------------------------ */
+
+.mantine-NavLink-root {
+  border-radius: 10px;
+  transition: background 120ms ease, transform 120ms ease;
+}
+
+.mantine-NavLink-root[data-active] {
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--app-accent) 16%, transparent),
+    color-mix(in srgb, var(--app-accent-2) 10%, transparent)
+  );
+  box-shadow: inset 3px 0 0 var(--app-accent);
+}
+
+/* --- hero -------------------------------------------------------------------- */
+
+.hero {
+  position: relative;
+  padding: 2.2rem 2.4rem;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid var(--mantine-color-default-border);
+  background:
+    radial-gradient(1100px 380px at 8% -20%,
+      color-mix(in srgb, var(--app-accent) 14%, transparent), transparent 60%),
+    radial-gradient(900px 340px at 95% 120%,
+      color-mix(in srgb, var(--app-accent-2) 12%, transparent), transparent 60%),
+    var(--mantine-color-body);
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(
+    color-mix(in srgb, var(--mantine-color-text) 9%, transparent) 1px,
+    transparent 1px
+  );
+  background-size: 22px 22px;
+  mask-image: linear-gradient(120deg, black, transparent 65%);
+  pointer-events: none;
+}
+
+.hero-title {
+  font-size: clamp(1.9rem, 3.4vw, 2.7rem);
+  font-weight: 750;
+  letter-spacing: -0.03em;
+  line-height: 1.08;
+  background: linear-gradient(100deg, var(--mantine-color-text) 30%, var(--app-accent) 75%, var(--app-accent-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* --- tool cards ------------------------------------------------------------ */
+
+.tool-card {
+  position: relative;
+  text-decoration: none;
+  color: inherit;
+  overflow: hidden;
+  transition: transform 140ms ease, box-shadow 140ms ease, border-color 140ms ease;
+}
+
+.tool-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--app-accent), var(--app-accent-2));
+  opacity: 0;
+  transition: opacity 140ms ease;
+}
+
+.tool-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--mantine-shadow-md);
+  border-color: color-mix(in srgb, var(--app-accent) 45%, var(--mantine-color-default-border));
+}
+
+.tool-card:hover::before {
+  opacity: 1;
+}
+
+/* --- pipeline stage connector ------------------------------------------------- */
+
+.stage-arrow {
+  display: flex;
+  justify-content: center;
+  color: var(--mantine-color-dimmed);
+  opacity: 0.7;
+  margin: -4px 0;
+}
+
+/* --- LLM extraction chat ------------------------------------------------------ */
+
+.chat-bubble {
+  padding: 8px 12px;
+  border-radius: 14px;
+  max-width: 86%;
+  width: fit-content;
+}
+
+.chat-user {
+  align-self: flex-end;
+  background: color-mix(in srgb, var(--app-accent) 14%, var(--mantine-color-body));
+  border: 1px solid color-mix(in srgb, var(--app-accent) 28%, transparent);
+  border-bottom-right-radius: 4px;
+}
+
+.chat-assistant {
+  align-self: flex-start;
+  background: var(--mantine-color-default-hover);
+  border: 1px solid var(--mantine-color-default-border);
+  border-bottom-left-radius: 4px;
+}
+
+/* --- generic polish ----------------------------------------------------------- */
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--mantine-color-text) 18%, transparent);
+  border-radius: 6px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+::-webkit-scrollbar-track { background: transparent; }
+
+svg { max-width: none; }

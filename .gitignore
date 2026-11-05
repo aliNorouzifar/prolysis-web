@@ -1,0 +1,32 @@
+# Runtime artifacts
+event_logs/
+output_files/
+*.log
+
+# Node
+node_modules/
+npm-debug.log*
+frontend/dist/
+.vite/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+build/
+dist/
+
+# Secrets and local config
+.env
+*.key
+
+# OS and editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Optional local prolysis wheel
+backend/vendor/*.whl

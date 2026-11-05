@@ -1,0 +1,35 @@
+{
+  "name": "prolysis-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@apollo/client": "^3.12.3",
+    "@fontsource-variable/inter": "^5.2.8",
+    "@mantine/core": "^7.15.1",
+    "@mantine/hooks": "^7.15.1",
+    "@mantine/notifications": "^7.15.1",
+    "@types/dagre": "^0.7.54",
+    "bpmn-js": "^18.21.0",
+    "dagre": "^0.8.5",
+    "echarts": "^6.1.0",
+    "graphql": "^16.9.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.28.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "@types/react": "^18.3.17",
+    "@types/react-dom": "^18.3.5",
+    "@vitejs/plugin-react": "^4.3.4",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.3"
+  }
+}

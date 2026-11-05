@@ -1,0 +1,109 @@
+# Prolysis — full stack (frontend + BFF + Python backend + Postgres), no Redis, no JVM.
+#
+#   docker compose up --build         # then open http://localhost:8080
+#
+# Tiers:
+#   caddy          reverse proxy: "/" -> frontend, "/graphql" -> bff (single entry point)
+#   frontend       React SPA (nginx)
+#   bff            GraphQL Yoga (Node/TS)
+#   backend-api    FastAPI over prolysis
+#   backend-worker Procrastinate worker (async compute jobs)
+#   goose          one-shot schema migration, runs before the apps
+#   postgres       the single datastore (artifacts, logs, jobs, activity log)
+
+name: prolysis
+
+x-db-url: &db-url "postgres://prolysis:prolysis@postgres:5432/prolysis"
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: prolysis
+      POSTGRES_PASSWORD: prolysis
+      POSTGRES_DB: prolysis
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U prolysis -d prolysis"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    restart: unless-stopped
+
+  goose:
+    build: ./db
+    environment:
+      GOOSE_DRIVER: postgres
+      GOOSE_DBSTRING: "postgres://prolysis:prolysis@postgres:5432/prolysis?sslmode=disable"
+      GOOSE_MIGRATION_DIR: migrations
+    command: ["up"]
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: "no"
+
+  backend-api:
+    build: ./backend
+    environment:
+      DATABASE_URL: *db-url
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      goose:
+        condition: service_completed_successfully
+    restart: unless-stopped
+
+  backend-worker:
+    build: ./backend
+    environment:
+      DATABASE_URL: *db-url
+    command: >
+      sh -c "procrastinate --app=app.jobs.app schema --apply || true;
+             procrastinate --app=app.jobs.app worker --concurrency 1"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      goose:
+        condition: service_completed_successfully
+    restart: unless-stopped
+
+  bff:
+    build: ./bff
+    environment:
+      PORT: "8080"
+      BACKEND_URL: "http://backend-api:8000"
+      DATABASE_URL: *db-url
+      CORS_ORIGIN: "*"
+    depends_on:
+      - backend-api
+    restart: unless-stopped
+
+  frontend:
+    build: ./frontend
+    depends_on:
+      - bff
+    restart: unless-stopped
+
+  caddy:
+    image: caddy:2-alpine
+    environment:
+      SITE_ADDRESS: "${SITE_ADDRESS:-:80}"
+    ports:
+      - "${HTTP_PORT:-8080}:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - frontend
+      - bff
+    restart: unless-stopped
+
+volumes:
+  pg_data:
+  caddy_data:
+  caddy_config:

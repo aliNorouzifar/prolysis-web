@@ -1,0 +1,37 @@
+# Prolysis backend service (Python 3.11)
+#
+# The heavy scientific stack (pm4py, numpy, numba, scikit-learn, ruptures, shap, …) is
+# owned and pinned by `prolysis` and installed transitively — do not re-pin it here.
+
+# --- Algorithmic backbone (separate PyPI package) ---
+prolysis>=0.3.0
+
+# --- XES import --- pm4py's rustxes reader needs pyarrow, which nothing pins. pyarrow 26
+# requires NumPy 2, while the stack above is on NumPy 1.26, so an unpinned build fails on
+# every XES read.
+pyarrow==25.0.1
+
+# --- Web / API --- (versions the app is import-validated against)
+fastapi==0.139.0
+uvicorn[standard]==0.51.0
+python-multipart==0.0.32
+pydantic-settings==2.14.2
+
+# --- Database + async job queue (both on Postgres) ---
+sqlalchemy==2.0.51
+psycopg[binary]==3.3.4
+procrastinate==3.9.0
+
+# --- Model rendering + HTTP (explicit, though also pulled in transitively) ---
+graphviz==0.21
+requests==2.32.4
+
+# --- Discriminative discovery (rule learning; not owned by prolysis) ---
+rulefit
+imbalanced-learn
+wittgenstein
+statsmodels
+
+# --- LLM providers (domain-guided discovery; keys supplied per request, never stored) ---
+openai==1.98.0
+google-generativeai==0.5.0

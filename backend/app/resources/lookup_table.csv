@@ -1,0 +1,29 @@
+;1000;0000;1110;0001;0100;1100
+AtLeast1;{'exc'};{'loop', 'exc'};{'exc_tau'};{'xor_single'};;
+AtLeast2;{'loop', 'seq', 'par', 'exc'};{'loop', 'seq', 'par', 'exc'};{'exc_tau'};{'single_single', 'loop_single', 'xor_single'};;
+AtLeast3;{'loop', 'seq', 'par', 'exc'};{'loop', 'seq', 'par', 'exc'};{'exc_tau', 'loop_tau'};{'single_single', 'loop_single', 'xor_single'};;
+AtMost1;{'loop'};{'loop'};{'loop_tau'};{'loop_single'};;
+AtMost2;{'loop'};{'loop'};{'loop_tau'};{'loop_single'};;
+AtMost3;{'loop'};{'loop'};{'loop_tau'};set();;
+Absence;{'loop', 'seq', 'par', 'exc'};{'loop', 'seq', 'par', 'exc'};{'exc_tau', 'loop_tau'};{'single_single', 'loop_single', 'xor_single'};;
+Init;{'exc', 'par'};{'loop', 'seq', 'par', 'exc'};{'exc_tau'};{'xor_single'};;
+End;{'seq', 'par', 'exc'};{'loop', 'exc', 'par'};{'exc_tau'};{'xor_single'};;
+CoExistence;{'loop', 'exc'};set();set();;{'loop', 'exc'};set()
+RespondedExistence;{'loop', 'exc'};set();set();;{'exc'};set()
+Response;{'loop', 'exc', 'par'};set();set();;{'seq', 'par', 'exc'};set()
+AlternateResponse;{'loop', 'exc', 'par'};set();set();;{'seq', 'par', 'exc'};set()
+ChainResponse;{'loop', 'exc', 'par'};set();set();;{'seq', 'par', 'exc'};set()
+Precedence;{'exc', 'par'};set();set();;{'loop', 'seq', 'par', 'exc'};set()
+AlternatePrecedence;{'exc', 'par'};set();set();;{'loop', 'seq', 'par', 'exc'};set()
+ChainPrecedence;{'exc', 'par'};set();set();;{'loop', 'seq', 'par', 'exc'};set()
+Succession;{'loop', 'exc', 'par'};set();set();;{'loop', 'seq', 'par', 'exc'};set()
+AlternateSuccession;{'loop', 'exc', 'par'};set();set();;{'loop', 'seq', 'par', 'exc'};set()
+ChainSuccession;{'loop', 'exc', 'par'};set();set();;{'loop', 'seq', 'par', 'exc'};set()
+NotRespondedExistence;{'loop', 'seq', 'par'};{'loop'};{'loop_tau'};;{'loop', 'seq', 'par'};{'loop'}
+NotCoExistence;{'loop', 'seq', 'par'};{'loop'};{'loop_tau'};;{'loop', 'seq', 'par'};{'loop'}
+NotResponse;{'loop', 'seq', 'par'};{'loop'};{'loop_tau'};;{'loop', 'par'};{'loop'}
+NotChainResponse;set();set();set();;set();set()
+NotPrecedence;{'loop', 'seq', 'par'};{'loop'};{'loop_tau'};;{'loop', 'par'};{'loop'}
+NotChainPrecedence;set();set();set();;set();set()
+NotSuccession;{'loop', 'seq', 'par'};{'loop'};{'loop_tau'};;{'loop', 'par'};{'loop'}
+NotChainSuccession;set();set();set();;set();set()

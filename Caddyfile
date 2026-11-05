@@ -1,0 +1,11 @@
+# Single entry point. Locally SITE_ADDRESS defaults to :80 (plain HTTP on the mapped host
+# port). On the Oracle VM, set SITE_ADDRESS to your domain (e.g. prolysis.duckdns.org) and
+# Caddy obtains a TLS certificate automatically.
+{$SITE_ADDRESS} {
+	# GraphQL API + upload proxy -> BFF (paths preserved).
+	@bff path /graphql* /api/*
+	reverse_proxy @bff bff:8080
+
+	# Everything else -> the static SPA.
+	reverse_proxy frontend:80
+}
